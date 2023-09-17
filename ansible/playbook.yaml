@@ -1,4 +1,4 @@
-- hosts: alura-terraform-ansible
+- hosts: tag_Stack_python
   tasks:
   - name: Instalando o Python3 e Virtualenv
     become: yes
