@@ -13,24 +13,12 @@ provider "aws" {
   region = var.region
 }
 
-
-resource "aws_security_group" "alura-sg" {
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+resource "aws_key_pair" "alura_key_pair" {
+  key_name = var.key_name
+  public_key = var.public_key
 }
 
-resource "aws_instance" "django-app-instance" {
+resource "aws_instance" "django_app_instance" {
   ami             = data.aws_ami.ubuntu.id
   key_name        = var.key_name
   instance_type   = var.instance_type
