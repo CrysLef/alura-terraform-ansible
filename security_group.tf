@@ -1,4 +1,4 @@
-resource "aws_security_group" "alura-sg" {
+resource "aws_security_group" "this" {
   ingress {
     from_port   = 0
     to_port     = 0
