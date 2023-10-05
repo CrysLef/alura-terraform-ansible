@@ -13,29 +13,25 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_key_pair" "alura_key_pair" {
-  key_name = var.key_name
+resource "aws_key_pair" "this" {
+  key_name   = var.key_name
   public_key = var.public_key
 }
 
 resource "aws_instance" "django_app_instance" {
   ami             = data.aws_ami.ubuntu.id
   key_name        = var.key_name
-  instance_type   = var.instance_type
-  count           = var.instances_count
+  instance_type   = "${terraform.workspace == "prod" ? "t3.micro" : "t2.micro"}"
+  count           = "${terraform.workspace == "prod" ? 3 : 1}"
   security_groups = ["${aws_security_group.alura-sg.name}"]
 
-  tags = {
-    Name        = "alura_python_django"
-    Environment = "dev"
-    Stack       = "python"
-  }
+  tags = "${terraform.workspace == "prod" ? var.tag_prod : var.tag_teste}"
 }
 
 resource "aws_dynamodb_table" "state_lock" {
-  name = "dynamodb-state-lock"
-  hash_key = "LockID"
-  read_capacity = 20
+  name           = "dynamodb-state-lock"
+  hash_key       = "LockID"
+  read_capacity  = 20
   write_capacity = 20
 
   attribute {
