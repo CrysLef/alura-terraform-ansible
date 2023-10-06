@@ -1,18 +1,17 @@
-- hosts: tag_Stack_python
-  tasks:
-  - name: Instalando o Python3 e Virtualenv
-    become: yes
-    apt:
-      pkg:
-      - python3
-      - virtualenv
-      update_cache: yes
-  - name: Instalando as dependencias do projeto com pip
-    pip:
-      virtualenv: /home/ubuntu/proj/venv
-      name:
-        - django
-        - djangorestframework
-  - name: Iniciando o projeto
-    shell: 'cd /home/ubuntu/proj; . venv/bin/activate; django-admin startproject setup .'
-    ignore_errors: true
+- name: "Install docker"
+  become: yes
+  hosts: tag_Type_Containered
+  roles:
+    - docker
+
+- name: "Setup Golang enviroment"
+  become: yes
+  hosts: tag_Stack_Golang
+  roles:
+    - golang
+
+- name: "Setup Web app"
+  become: yes
+  hosts: tag_Stack_Javascript
+  roles:
+    - web
