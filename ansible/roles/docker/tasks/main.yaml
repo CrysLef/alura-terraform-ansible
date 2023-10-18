@@ -16,4 +16,4 @@
 
 - name: Install docker
   shell:
-    cmd: curl -fsSL https://get.docker.com/rootless | sh
+    cmd: curl -fsSL https://get.docker.com/ | sh
