@@ -1,0 +1,6 @@
+---
+- name: Criacao do container da app web
+  community.docker.docker_container:
+    name: gamarepo
+    image: crystianlefundes/gamarepo:1.0
+    published_ports: "3000:3000"
